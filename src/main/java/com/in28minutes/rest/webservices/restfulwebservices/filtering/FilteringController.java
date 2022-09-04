@@ -1,5 +1,9 @@
 package com.in28minutes.rest.webservices.restfulwebservices.filtering;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,8 +14,13 @@ import java.util.List;
 public class FilteringController {
 
     @GetMapping("/filtering")
-    public SomeBean filtering() {
-        return new SomeBean("val1", "val2", "val3");
+    public MappingJacksonValue filtering() {
+        SomeBean bean = new SomeBean("val1", "val2", "val3");
+        MappingJacksonValue mjv = new MappingJacksonValue(bean);
+        SimpleBeanPropertyFilter sbpf = SimpleBeanPropertyFilter.filterOutAllExcept("field1");
+        FilterProvider fp = new SimpleFilterProvider().addFilter("SomeBeanFilter", sbpf);
+        mjv.setFilters(fp);
+        return mjv;
     }
 
     @GetMapping("/filtering-list")
