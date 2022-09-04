@@ -1,24 +1,32 @@
 package com.in28minutes.rest.webservices.restfulwebservices.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
+@Entity(name="user_details")
 public class User {
+    @Id
+    @GeneratedValue
     private Integer id;
     @Size(min=1)
     @JsonProperty("customUserName")
     private String name;
     @Past
-    private LocalDate date;
+    private LocalDate birthdate;
 
     public User(Integer id, String name, LocalDate date) {
         this.id = id;
         this.name = name;
-        this.date = date;
+        this.birthdate = date;
     }
+
+    protected User() {}
 
     public Integer getId() {
         return id;
@@ -36,12 +44,12 @@ public class User {
         this.name = name;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getBirthdate() {
+        return birthdate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
     }
 
     @Override
@@ -49,7 +57,7 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", date=" + date +
+                ", birthdate=" + birthdate +
                 '}';
     }
 }
