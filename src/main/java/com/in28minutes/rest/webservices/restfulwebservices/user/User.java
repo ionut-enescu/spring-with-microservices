@@ -18,7 +18,7 @@ public class User {
     @GeneratedValue
     private Integer id;
     @Size(min=1)
-    @JsonProperty("customUserName")
+//    @JsonProperty("customUserName")
     private String name;
     @Past
     private LocalDate birthdate;
